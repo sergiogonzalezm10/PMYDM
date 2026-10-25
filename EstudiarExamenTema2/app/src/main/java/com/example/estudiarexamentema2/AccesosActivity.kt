@@ -3,6 +3,7 @@ package com.example.estudiarexamentema2
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -29,9 +30,7 @@ class AccesosActivity : AppCompatActivity() {
 
             binding.buttonNavegador.setOnClickListener {
                 val query = binding.editTextTextEntrada.text.toString()
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = "https://www.google.com/search?q=$query".toUri()
-                startActivity(intent)
+                abrirNavegador(query)
             }
             binding.buttonTelefono.setOnClickListener {
                 val query = binding.editTextTextEntrada.text.toString()
@@ -46,7 +45,7 @@ class AccesosActivity : AppCompatActivity() {
 
             binding.buttonSMS.setOnClickListener {
                 val smsIntent = Intent(Intent.ACTION_VIEW)
-                smsIntent.data = Uri.parse("smsto:" + binding.editTextTextEntrada.text.toString()) // número escrito en el EditText
+                smsIntent.data = ("smsto:" + binding.editTextTextEntrada.text.toString()).toUri() // número escrito en el EditText
                 smsIntent.putExtra("sms_body", "Hola desde mi app") // texto opcional
                 startActivity(smsIntent)
             }
@@ -64,4 +63,14 @@ class AccesosActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+    private fun abrirNavegador(busqueda: String) {
+        if (busqueda.isNotBlank()) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = "https://www.google.com/search?q=$busqueda".toUri()
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Escribe algo para buscar", Toast.LENGTH_SHORT).show()
+        }
+    }
     }

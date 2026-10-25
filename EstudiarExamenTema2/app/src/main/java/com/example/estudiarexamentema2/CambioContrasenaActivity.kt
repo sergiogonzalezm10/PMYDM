@@ -2,11 +2,13 @@ package com.example.estudiarexamentema2
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.estudiarexamentema2.databinding.ActivityCambioContrasenaBinding
+
 class CambioContrasenaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCambioContrasenaBinding
@@ -24,14 +26,6 @@ class CambioContrasenaActivity : AppCompatActivity() {
             insets
         }
 
-        val nuevaContrasena = binding.editTextTextPassword2.text.toString().trim()
-        if (nuevaContrasena.isNotEmpty()) {
-            MainActivity.contrasenaGuardada = nuevaContrasena // 👈 Cambia el valor global
-
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
         // 1. Botón para cambiar la contraseña
         binding.buttonGuardarContraseA.setOnClickListener {
             val nuevaContrasena = binding.editTextTextPassword2.text.toString().trim()
@@ -40,8 +34,9 @@ class CambioContrasenaActivity : AppCompatActivity() {
                 // Cambiamos el valor global
                 MainActivity.contrasenaGuardada = nuevaContrasena
 
-                // Mostramos el mensaje en el TextView en lugar de cambiar de pantalla
+                // Mostramos el mensaje en el TextView y con un Toast
                 binding.textView3.text = "¡Contraseña cambiada exitosamente!"
+                Toast.makeText(applicationContext, "¡Contraseña cambiada exitosamente!", Toast.LENGTH_SHORT).show()
             } else {
                 binding.editTextTextPassword2.error = "Escribe una contraseña válida"
             }
